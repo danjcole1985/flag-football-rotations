@@ -418,8 +418,8 @@ export default function App() {
   };
 
   const s = {
-    app: { minHeight: "100vh", background: c.bg, color: c.text, fontFamily: "'Inter','Helvetica Neue',sans-serif", paddingBottom: 48 },
-    header: { background: "#111811", padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `2px solid ${c.border}` },
+    app: { minHeight: "100vh", background: c.bg, color: c.text, fontFamily: "'Inter','Helvetica Neue',sans-serif", paddingBottom: "max(48px, calc(env(safe-area-inset-bottom, 0px) + 24px))", WebkitTapHighlightColor: "transparent" },
+    header: { background: "#111811", paddingTop: "max(12px, env(safe-area-inset-top, 12px))", paddingBottom: "12px", paddingLeft: "max(16px, env(safe-area-inset-left, 16px))", paddingRight: "max(16px, env(safe-area-inset-right, 16px))", display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: `2px solid ${c.border}` },
     title: { fontSize: 17, fontWeight: 700, letterSpacing: "0.03em", margin: 0 },
     sub: { fontSize: 11, color: c.muted, marginTop: 2 },
     tabs: { display: "flex", gap: 5 },
@@ -506,7 +506,7 @@ export default function App() {
         {/* Side selector */}
         {!currentSeries ? (
           <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 12, color: c.muted, marginBottom: 8 }}>Series {seriesNum} — select side:</div>
+            <div style={{ fontSize: 12, color: c.muted, marginBottom: 8 }}>Series {seriesNum}: select side:</div>
             <div style={{ display: "flex", gap: 10, marginBottom: 10 }}>
               <button style={{ ...s.btn("off"), padding: "13px 0", fontSize: 15, flex: 1, borderRadius: 10 }} onClick={() => selectSide("offense")}>⚡ Offense</button>
               <button style={{ ...s.btn("def"), padding: "13px 0", fontSize: 15, flex: 1, borderRadius: 10 }} onClick={() => selectSide("defense")}>🛡 Defense</button>
@@ -530,7 +530,7 @@ export default function App() {
         {currentSeries && restingPlayer && !isCritical && (
           <div style={{ background: c.warnBg, border: `1px solid #4a3a00`, borderRadius: 8, padding: "10px 13px", marginBottom: 10 }}>
             <div style={{ fontSize: 12, color: c.accent, marginBottom: 7 }}>
-              <strong>{restingPlayer.name}</strong> is over their playing time target — good series to rest them.
+              <strong>{restingPlayer.name}</strong> is over their playing time target. Good series to rest them.
             </div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               <button style={s.btn("warn")} onClick={() => applyRestOverride("none")}>Keep in</button>
@@ -543,7 +543,7 @@ export default function App() {
         {currentSeries && (
           <div style={s.card(isCritical ? "critical" : currentSeries.side)}>
             <div style={s.cardHead}>
-              <span style={s.cardTitle}>Series {seriesNum}{isCritical ? " — CRITICAL" : ""} — {currentSeries.side}</span>
+              <span style={s.cardTitle}>Series {seriesNum}{isCritical ? " CRITICAL" : ""} · {currentSeries.side}</span>
               <span style={{ fontSize: 11, color: c.muted }}>Tap to swap</span>
             </div>
             {currentSeries.lineup.map((id) => {
